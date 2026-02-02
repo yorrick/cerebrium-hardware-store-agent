@@ -1,9 +1,10 @@
 [cerebrium.deployment]
 name = "hardware-store-agent"
+project_id = "p-582af3ae"
 python_version = "3.11"
 disable_auth = false
 include = ['./*', 'src/*', 'cerebrium.toml']
-exclude = ['.*', '__pycache__', '*.pyc', 'tests/*', 'logs/*']
+exclude = ['.*', '**/__pycache__/**', '*.pyc', 'tests/**', 'logs/**', '.venv/**', '.git/**', 'node_modules/**']
 
 [cerebrium.hardware]
 cpu = 2
@@ -19,3 +20,5 @@ replica_concurrency = 1
 [cerebrium.runtime.custom]
 port = 8600
 dockerfile_path = "./Dockerfile"
+healthcheck_endpoint = "/health"
+readycheck_endpoint = "/health"

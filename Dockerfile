@@ -55,7 +55,8 @@ USER appuser
 
 # Pre-download any ML models or files the agent needs
 # This ensures the container is ready to run immediately
-RUN uv run src/agent.py download-files
+# Set HF_HOME here too to ensure models go to the right place
+RUN HF_HOME=/cortex/.cache uv run src/agent.py download-files
 
 # Expose the port for Cerebrium
 EXPOSE 8600

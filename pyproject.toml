@@ -20,6 +20,7 @@ dev = [
     "pytest-asyncio",
     "ruff",
     "pyright",
+    "cerebrium>=2.2.0",
 ]
 
 [tool.pyright]

@@ -19,7 +19,6 @@ from livekit.agents import (
 )
 from livekit.agents.llm import ToolError
 from livekit.plugins import noise_cancellation, silero
-from livekit.plugins.turn_detector.multilingual import MultilingualModel
 
 logger = logging.getLogger("agent")
 
@@ -309,8 +308,8 @@ async def entrypoint(ctx: JobContext):
         tts=inference.TTS(
             model="cartesia/sonic-3", voice="9626c31c-bec5-4cca-baa8-f8ba9e84c8bc"
         ),
-        # Turn detection for natural conversation flow
-        turn_detection=MultilingualModel(),
+        # Turn detection - using None to skip the multilingual model that requires download
+        turn_detection=None,
         vad=ctx.proc.userdata["vad"],
         # Allow preemptive generation for faster responses
         preemptive_generation=True,

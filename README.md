@@ -132,10 +132,25 @@ Add your environment variables in the Cerebrium dashboard under **Secrets**:
 - `SUPERVISOR_PHONE_NUMBER` (optional)
 - `LIVEKIT_SIP_OUTBOUND_TRUNK` (optional)
 
+### Add Secrets via CLI
+
+```bash
+cerebrium secrets add \
+  "LIVEKIT_URL=wss://your-project.livekit.cloud" \
+  "LIVEKIT_API_KEY=your-api-key" \
+  "LIVEKIT_API_SECRET=your-api-secret"
+```
+
+Verify secrets are set:
+
+```bash
+cerebrium secrets list
+```
+
 ### Deploy
 
 ```bash
-cerebrium deploy
+cerebrium deploy -y
 ```
 
 This will:
@@ -143,6 +158,62 @@ This will:
 2. Install dependencies
 3. Download ML models
 4. Deploy with autoscaling (1-5 replicas)
+
+### Verify Deployment
+
+Check app status:
+
+```bash
+cerebrium apps list
+```
+
+You should see `STATUS: ready`:
+
+```
+ID                                  STATUS  CREATED              UPDATED
+p-xxxxx-hardware-store-agent        ready   2026-02-02 19:55:23  2026-02-02 19:55:23
+```
+
+Check logs to confirm agent registered with LiveKit:
+
+```bash
+cerebrium logs hardware-store-agent --since "5m" --no-follow
+```
+
+Look for:
+```
+{"message": "registered worker", "agent_name": "hardware-store", ...}
+```
+
+### Test with a Phone Call
+
+Make a test call via Twilio CLI (directly to LiveKit SIP):
+
+```bash
+twilio api:core:calls:create \
+  --to "sip:+14387994512@<your-sip-uri>.sip.livekit.cloud" \
+  --from "+1YOURTWILINUMBER" \
+  --url "https://handler.twilio.com/twiml/EHb11cbc2e61587849ca15aa519559569f"
+```
+
+Then check logs for incoming job:
+
+```bash
+cerebrium logs hardware-store-agent --since "2m" --no-follow
+```
+
+Look for:
+```
+{"message": "received job request", "room": "call-_+1...", ...}
+```
+
+### Tail Logs in Real-Time
+
+```bash
+cerebrium logs hardware-store-agent
+```
+
+Press `Ctrl+C` to stop.
 
 ## Twilio Telephony Setup
 

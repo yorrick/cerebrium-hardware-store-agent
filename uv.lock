@@ -217,6 +217,15 @@ wheels = [
 ]
 
 [[package]]
+name = "cerebrium"
+version = "2.2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/a8/87/c2b2d41fc2ee6d516d9943d48922cd541b356101559fd9159429cb2a3ee0/cerebrium-2.2.0.tar.gz", hash = "sha256:b2117b18768b38c45eff0dfe983e4ab066093e84b1be2959c5880ce55f599c29", size = 6023 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f1/f7/4457e53c3e5ce0a6e73da7138e659896b998ce1d4c2cddcdf95adfb5bfe7/cerebrium-2.2.0-py3-none-any.whl", hash = "sha256:bb119b6ef6228580d15d12636c6ca0164c10567fc0f297c4c9686b4a4e767c81", size = 6389 },
+]
+
+[[package]]
 name = "cerebrium-hardware-store-agent"
 version = "1.0.0"
 source = { editable = "." }
@@ -228,6 +237,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "cerebrium" },
     { name = "pyright" },
     { name = "pytest" },
     { name = "pytest-asyncio" },
@@ -243,6 +253,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "cerebrium", specifier = ">=2.2.0" },
     { name = "pyright" },
     { name = "pytest" },
     { name = "pytest-asyncio" },
@@ -456,7 +467,7 @@ name = "exceptiongroup"
 version = "1.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/50/79/66800aadf48771f6b62f7eb014e352e5d06856655206165d775e675a02c9/exceptiongroup-1.3.1.tar.gz", hash = "sha256:8b412432c6055b0b7d14c310000ae93352ed6754f70fa8f7c34141f91c4e3219", size = 30371 }
 wheels = [

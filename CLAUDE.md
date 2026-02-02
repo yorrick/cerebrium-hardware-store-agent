@@ -137,6 +137,32 @@ uv run cerebrium logs hardware-store-agent --since "15m" --no-follow
 
 If after 4 attempts you still get no logs, then conclude the logs are not available for that time window.
 
+### Understanding Log Patterns
+
+When reading Cerebrium logs, note these patterns:
+
+**Worker handoff during deployments:**
+```
+{"message": "registered worker", "id": "AW_uAJvUz8vvSap", ...}
+{"message": "draining worker", "id": "AW_9DEbmHM4Nx7S", ...}
+{"message": "shutting down worker", "id": "AW_9DEbmHM4Nx7S", ...}
+```
+The `registered worker` and `draining worker` messages have different worker IDs. This is normal - Cerebrium spins up a new worker before draining the old one, ensuring zero-downtime deployments.
+
+**Incoming call received:**
+```
+{"message": "received job request", "job_id": "AJ_xxx", "room": "call-_+14388149935_xxx", ...}
+```
+This indicates a phone call was successfully routed to the agent. The `room` field contains the caller's phone number.
+
+**Agent processing initialized:**
+```
+{"message": "initializing process", "pid": 119, ...}
+{"message": "process initialized", "pid": 119, "elapsed_time": 0.24, ...}
+{"message": "[Prewarm] VAD model loaded", "pid": 119, ...}
+```
+These logs confirm the agent worker process started and loaded the VAD model for voice activity detection.
+
 ### Make a Test Call
 
 Call directly to LiveKit SIP endpoint:

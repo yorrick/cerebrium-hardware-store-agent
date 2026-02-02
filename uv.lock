@@ -230,7 +230,7 @@ name = "cerebrium-hardware-store-agent"
 version = "1.0.0"
 source = { editable = "." }
 dependencies = [
-    { name = "livekit-agents", extra = ["google", "openai", "silero", "turn-detector"] },
+    { name = "livekit-agents", extra = ["cartesia", "elevenlabs", "google", "openai", "silero", "turn-detector"] },
     { name = "livekit-plugins-noise-cancellation" },
     { name = "python-dotenv" },
 ]
@@ -246,7 +246,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "livekit-agents", extras = ["silero", "turn-detector", "openai", "google"], specifier = "~=1.3" },
+    { name = "livekit-agents", extras = ["silero", "turn-detector", "openai", "google", "elevenlabs", "cartesia"], specifier = "~=1.3" },
     { name = "livekit-plugins-noise-cancellation", specifier = "~=0.2" },
     { name = "python-dotenv" },
 ]
@@ -1071,9 +1071,15 @@ wheels = [
 ]
 
 [package.optional-dependencies]
+cartesia = [
+    { name = "livekit-plugins-cartesia" },
+]
 codecs = [
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "numpy", version = "2.4.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+]
+elevenlabs = [
+    { name = "livekit-plugins-elevenlabs" },
 ]
 google = [
     { name = "livekit-plugins-google" },
@@ -1132,6 +1138,30 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/e0/d2/ad95d195ed6dccb6527ed3c1e753f211c3e9509050af5cddf007608bb104/livekit_blingfire-1.1.0-cp313-cp313-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:8f3aac3207cdd88c62323e0b07c33a69aac79c544122a2ddfbecc6c721ca760c", size = 167886 },
     { url = "https://files.pythonhosted.org/packages/c5/67/fc4af1bbbed319d8edc319051bce720b51fa544f5d2ebb3201240779f135/livekit_blingfire-1.1.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:839feefa2910f99d794d3f3d696f95193ee8188cc6688a8d712bade2cede7951", size = 175858 },
     { url = "https://files.pythonhosted.org/packages/76/6c/9e14763826476925767b511531318a83f95f3bf9e4dbc7dc611400af6e9e/livekit_blingfire-1.1.0-cp313-cp313-win_amd64.whl", hash = "sha256:1409d4c297260b60a37bfe6ba21e4fb59dd53cd929632c0a78a28d41fe424302", size = 131048 },
+]
+
+[[package]]
+name = "livekit-plugins-cartesia"
+version = "1.3.12"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "livekit-agents" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5c/0a/5fc0055a19be4b1b708e0f9adad54d32fbd9b6847c10fc7141dfe079abd6/livekit_plugins_cartesia-1.3.12.tar.gz", hash = "sha256:115b06154d0565768c3e3c81b0dcb81be1f65884c52cda2b1a837d41be8eaf50", size = 12528 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/98/43/c66cbd6ac0858d424f7e91445b6bfaa0367124a14bcc15d4358344ac147a/livekit_plugins_cartesia-1.3.12-py3-none-any.whl", hash = "sha256:6488b802afaa9e2516f7cc2a6a06c1c2f8094dab50a8fe34403a796e1a78abee", size = 15499 },
+]
+
+[[package]]
+name = "livekit-plugins-elevenlabs"
+version = "1.3.12"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "livekit-agents", extra = ["codecs"] },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e5/b3/d83283624aa20f002d4d81148be5413f3b05d0badf597745bcf1937e4863/livekit_plugins_elevenlabs-1.3.12.tar.gz", hash = "sha256:089cada5a990fbcdca1671057315c5537cd67105ad5ad16a3712ae864bfd9553", size = 16016 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/51/29/9fb9c4aad49f1125ae3a94b72c0e08edecf9f9cf23b8a13715d2f59bbd62/livekit_plugins_elevenlabs-1.3.12-py3-none-any.whl", hash = "sha256:88b6532d13faa03d62d1d28f4b0a29fefc9df3e1eb4491e39f2aa30b9113f603", size = 18399 },
 ]
 
 [[package]]

@@ -1,0 +1,11 @@
+# LiveKit Cloud configuration
+# This file is used by the LiveKit CLI for cloud deployments
+# Run `lk cloud auth` to authenticate, then `lk app env -w` to populate
+
+[project]
+  # Will be populated by `lk app env -w`
+  # subdomain = "your-project"
+
+[agent]
+  # Will be populated after first deployment
+  # id = "CA_xxxxx"

@@ -1,0 +1,21 @@
+[cerebrium.deployment]
+name = "hardware-store-agent"
+python_version = "3.11"
+disable_auth = false
+include = ['./*', 'src/*', 'cerebrium.toml']
+exclude = ['.*', '__pycache__', '*.pyc', 'tests/*', 'logs/*']
+
+[cerebrium.hardware]
+cpu = 2
+memory = 8.0
+compute = "CPU"
+
+[cerebrium.scaling]
+min_replicas = 1
+max_replicas = 5
+cooldown = 30
+replica_concurrency = 1
+
+[cerebrium.runtime.custom]
+port = 8600
+dockerfile_path = "./Dockerfile"

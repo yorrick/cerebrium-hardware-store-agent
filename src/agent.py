@@ -17,7 +17,7 @@ from livekit.agents import (
     room_io,
 )
 from livekit.agents.llm import ToolError
-from livekit.plugins import cartesia, elevenlabs, google, noise_cancellation, silero
+from livekit.plugins import cartesia, deepgram, google, noise_cancellation, silero
 
 logger = logging.getLogger("agent")
 
@@ -299,8 +299,8 @@ async def entrypoint(ctx: JobContext):
 
     # Set up a voice AI pipeline for the hardware store agent
     session = AgentSession(
-        # Speech-to-text (STT) using ElevenLabs plugin directly
-        stt=elevenlabs.STT(model_id="scribe_v2_realtime"),
+        # Speech-to-text (STT) using Deepgram Nova-3 for reliable English transcription
+        stt=deepgram.STT(model="nova-3", language="en"),
         # Large Language Model (LLM) for processing user input and generating responses
         llm=google.LLM(model="gemini-2.5-flash"),
         # Text-to-speech (TTS) using Cartesia plugin directly

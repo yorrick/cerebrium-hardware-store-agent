@@ -4,7 +4,7 @@
 
 set -e
 
-DISPATCH_RULE_ID="SDR_PQ7m39MPaf5Z"
+DISPATCH_RULE_ID="SDR_g7BAj37xFtzx"
 DEV_AGENT_NAME="hardware-store-dev"
 PROD_AGENT_NAME="hardware-store"
 

@@ -9,8 +9,9 @@ FROM ghcr.io/astral-sh/uv:python${PYTHON_VERSION}-bookworm-slim AS base
 # the application crashes without emitting any logs due to buffering.
 ENV PYTHONUNBUFFERED=1
 
-# Set HF_HOME for model caching (Cerebrium requirement)
-ENV HF_HOME=/cortex/.cache/
+# Set HF_HOME for model caching - use /opt/models so files persist in the image
+# /app and /cortex may be overwritten at runtime by Cerebrium
+ENV HF_HOME=/opt/models
 
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
@@ -34,7 +35,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Create the cache directory for model files
-RUN mkdir -p /cortex/.cache && chown -R appuser:appuser /cortex
+RUN mkdir -p /opt/models && chmod 777 /opt/models
 
 # Copy just the dependency files first, for more efficient layer caching
 COPY pyproject.toml ./
@@ -55,8 +56,9 @@ USER appuser
 
 # Pre-download any ML models or files the agent needs
 # This ensures the container is ready to run immediately
-# Set HF_HOME here too to ensure models go to the right place
-RUN HF_HOME=/cortex/.cache uv run src/agent.py download-files
+# Pre-download model files to /app/.cache (HF_HOME is already set via ENV)
+# Cache bust: v3 - force rebuild with /opt/models HF_HOME path
+RUN uv run src/agent.py download-files
 
 # Expose the port for Cerebrium
 EXPOSE 8600

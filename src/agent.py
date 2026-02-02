@@ -18,7 +18,7 @@ from livekit.agents import (
     room_io,
 )
 from livekit.agents.llm import ToolError
-from livekit.plugins import noise_cancellation, silero
+from livekit.plugins import google, noise_cancellation, silero
 
 logger = logging.getLogger("agent")
 
@@ -303,13 +303,15 @@ async def entrypoint(ctx: JobContext):
         # Speech-to-text (STT) for transcribing caller speech
         stt=inference.STT(model="elevenlabs/scribe_v2_realtime"),
         # Large Language Model (LLM) for processing user input and generating responses
-        llm=inference.LLM(model="google/gemini-3-flash"),
+        # Using Google plugin directly instead of LiveKit Inference to test latency
+        llm=google.LLM(model="gemini-2.5-flash"),
         # Text-to-speech (TTS) for speaking responses back to the caller
         tts=inference.TTS(
             model="cartesia/sonic-3", voice="9626c31c-bec5-4cca-baa8-f8ba9e84c8bc"
         ),
-        # Turn detection - using None to skip the multilingual model that requires download
-        turn_detection=None,
+        # Using VAD-only turn detection since MultilingualModel files don't persist
+        # in Cerebrium's runtime filesystem (Cerebrium overwrites the Docker image at runtime)
+        turn_detection="vad",
         vad=ctx.proc.userdata["vad"],
         # Allow preemptive generation for faster responses
         preemptive_generation=True,

@@ -205,5 +205,6 @@ Always copy the SIP URI directly from the dashboard when configuring your SIP tr
 
 ## Known Issues
 
-- **Turn detector model**: The MultilingualModel turn detector requires model files that don't persist in Cerebrium's cache. Use `turn_detection=None` instead.
+- **Turn detector model**: The `MultilingualModel` turn detector requires model files downloaded from HuggingFace. Although the `download-files` command runs during Docker build and downloads files successfully (verified in build logs to paths like `/opt/models/hub/` or `/app/.cache/hub/`), these files are **not available at runtime**. This appears to be a Cerebrium platform behavior where the runtime filesystem differs from the Docker image built during deployment. The workaround is to use `turn_detection="vad"` which only uses the Silero VAD model (loaded in prewarm) and doesn't require additional HuggingFace downloads. VAD-only turn detection is less context-aware but works reliably on Cerebrium.
+
 - **Log inconsistency**: Cerebrium's log API is unreliable - retry queries up to 4 times.

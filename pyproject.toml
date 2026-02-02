@@ -9,7 +9,7 @@ description = "Hardware store voice AI agent built with LiveKit Agents, deployed
 requires-python = ">=3.10, <3.14"
 
 dependencies = [
-    "livekit-agents[silero,turn-detector,openai]~=1.3",
+    "livekit-agents[silero,turn-detector,openai,google]~=1.3",
     "livekit-plugins-noise-cancellation~=0.2",
     "python-dotenv",
 ]
